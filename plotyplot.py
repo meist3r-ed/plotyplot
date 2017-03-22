@@ -1,4 +1,4 @@
-#   P L O T Y P L O T v0.75  #
+#   P L O T Y P L O T v1.0  #
 # random version numbers yay #
 # Gustavo Santiago,  8937416 #
 import cv2
@@ -42,7 +42,7 @@ def functionLoop(image, size, q, funcnum):
 #main#
 #----------------------------------------------------------------------#
 #Splashscreen :D
-print("### P L O T Y P L O T v0.75 ###")
+print("### P L O T Y P L O T v1.0 ###")
 
 filename = input("Type in the output filename (w/o filetype): ")
 if(len(filename) == 0):
