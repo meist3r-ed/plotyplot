@@ -1,20 +1,20 @@
-#   P L O T Y P L O T v1.0  #
+#   P L O T Y P L O T v1.1   #
 # random version numbers yay #
 # Gustavo Santiago,  8937416 #
 import cv2
 import numpy as np
 
-#Transforms num to RGB scale, from which seed is equivalent 255
-def valRGB(seed, num):
-    x = (255 * num)/seed
-    return num
+#Normalization function (for functions that overflows 255)
+def normalizeRGB(resRGB, size):
+    return (resRGB/(2 * size)) * 255
 
 #Program functions
-def calcRGB(xRGB, yRGB, q, funcnum):
+def calcRGB(size, xRGB, yRGB, q, funcnum):
     resRGB = 0
     if(funcnum == 1):
         #f(x, y) = (x + y)
         resRGB = xRGB + yRGB
+        resRGB = normalizeRGB(resRGB, size)
     elif(funcnum == 2):
         #f(x, y) = |sin(x, q) * 255|
         resRGB = np.absolute(np.sin(xRGB/q) * 255)
@@ -30,19 +30,16 @@ def calcRGB(xRGB, yRGB, q, funcnum):
 def functionLoop(image, size, q, funcnum):
     for x in range(0, size):
         for y in range(0, size):
-            #Changing X and Y to the RGB scale...
-            xRGB = valRGB(size, x)
-            yRGB = valRGB(size, y)
             #Calculating f(x, y)...
-            resRGB = calcRGB(xRGB, yRGB, q, funcnum)
+            resRGB = calcRGB(size, x, y, q, funcnum)
             #Filling the pixels...
-            image[x,y] = (resRGB, resRGB, resRGB)
+            image[x,y] = (resRGB)
     return image
 
 #main#
 #----------------------------------------------------------------------#
 #Splashscreen :D
-print("### P L O T Y P L O T v1.0 ###")
+print("### P L O T Y P L O T v1.1 ###")
 
 filename = input("Type in the output filename (w/o filetype): ")
 if(len(filename) == 0):
@@ -65,7 +62,7 @@ else:
         else:
             q = 1
 
-        output = np.zeros((size, size, 3), np.uint8)
+        output = np.zeros((size, size, 1), np.uint8)
         output = functionLoop(output, size, q, funcnum)
 
         cv2.imshow('plotyplot_output', output)

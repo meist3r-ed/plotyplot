@@ -24,6 +24,6 @@ There are 4 mathematical functions for image generation, you can choose one per 
 
 Values returned from f(x, y) are then assigned into the matrix as RGB values, with the following format:
 
->   matrix[x, y] = (result, result, result)
+>   matrix[x, y] = (result)
 
 The resulting image is a greyscale .png based on the chosen function
